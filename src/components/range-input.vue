@@ -5,8 +5,8 @@
       class="w-full py-2 px-3"
       id="wealth_quantity"
       type="range"
-      v-bind:value="value"
-      @change="$emit('change', $event.target.value)"
+      v-model="value"
+      @input="$emit('change', $event.target.value)"
       min="0"
       max="100"
     />
