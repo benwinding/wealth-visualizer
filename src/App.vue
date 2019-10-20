@@ -37,7 +37,9 @@
         </tr>
       </tbody>
     </table>
-    <wealth-3d />
+    <div class="relative w-full">
+      <wealth-3d />
+    </div>
   </div>
 </template>
 
