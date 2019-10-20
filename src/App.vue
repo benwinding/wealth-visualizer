@@ -25,6 +25,12 @@
             </div>
           </td>
         </tr>
+        <tr class="bg-gray-100">
+          <td class="border px-4 py-2">Currency</td>
+          <td class="border px-4 py-2">
+            <select-input v-model="selectModel" v-bind:options="currencies" @change="calculateFromCurrency"></select-input>
+          </td>
+        </tr>
         <tr>
           <td class="border px-4 py-2">Current Value</td>
           <td class="border px-4 py-2">${{ valueLogFormatted }}</td>
@@ -36,17 +42,21 @@
 
 <script>
 import Range from "./components/range-input.vue";
+import Select from "./components/select-input.vue";
 
 export default {
   name: "app",
   components: {
-    "range-input": Range
+    "range-input": Range,
+    "select-input": Select,
   },
   data() {
     return {
       rangeModel: 50,
       textModel: 100,
-      valueLog: 0
+      selectModel: 'AUD',
+      valueLog: 0,
+      currencies: ['AUD', 'USD', 'NZD']
     };
   },
   computed: {
@@ -69,6 +79,8 @@ export default {
         valueLog: this.valueLog,
         rangeModel: this.rangeModel
       });
+    },
+    calculateFromCurrency: function() {
     },
     convertFromLog: function(input) {
       const position = +input;
