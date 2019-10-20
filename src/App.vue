@@ -1,9 +1,36 @@
 <template>
   <div class="container mx-auto p-4">
-    <range-input v-model="value"></range-input>
-    <p>Wealth Visualisation</p>
+    <p class="text-3xl">Wealth Visualisation</p>
+    <p class="italic mb-4">Input your wealth to visualize it's physicality...</p>
 
-    <h1>Value: ${{ valueLog }}</h1>
+    <table class="table-fixed w-full">
+      <tbody>
+        <tr>
+          <td class="border px-4 py-2 w-1/4">Range Input</td>
+          <td class="border px-4 py-2">
+            <range-input v-model="rangeModel" @change="calculateFromRange"></range-input>
+          </td>
+        </tr>
+        <tr class="bg-gray-100">
+          <td class="border px-4 py-2">Text Input</td>
+          <td class="border px-4 py-2">
+            <div class="flex flex-row items-center" >
+              <span>$</span>
+              <input
+                type="text"
+                v-model="textModel"
+                @change="calculateFromText"
+                class="w-full border border-blue-500 rounded"
+              />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="border px-4 py-2">Current Value</td>
+          <td class="border px-4 py-2">${{ valueLogFormatted }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -13,29 +40,65 @@ import Range from "./components/range-input.vue";
 export default {
   name: "app",
   components: {
-    'range-input': Range
+    "range-input": Range
   },
   data() {
     return {
-      value: 50
+      rangeModel: 50,
+      textModel: 100,
+      valueLog: 0
     };
   },
   computed: {
-    valueLog: function() {
-      const position = this.value;
+    valueLogFormatted: function() {
+      return this.valueLog.toLocaleString();
+    }
+  },
+  mounted: function() {
+    this.calculateFromRange();
+  },
+  methods: {
+    calculateFromRange: function() {
+      this.valueLog = this.convertToLog(this.rangeModel);
+      this.textModel = this.valueLog;
+    },
+    calculateFromText: function() {
+      this.valueLog = this.textModel;
+      this.rangeModel = this.convertFromLog(this.textModel);
+      console.log("calculateFromText", {
+        valueLog: this.valueLog,
+        rangeModel: this.rangeModel
+      });
+    },
+    convertFromLog: function(input) {
+      const position = +input;
       // position will be between 0 and 100
       const minp = 0;
       const maxp = 100;
-
       // The result should be between 100 an 10000000
       const minv = Math.log(100);
       const maxv = Math.log(100000000000000);
-
+      // calculate adjustment factor
+      const scale = (maxv - minv) / (maxp - minp);
+      const val = (Math.log(position) - minv) / scale + minp;
+      // position will be between 0 and 100
+      const value = +val;
+      return value;
+    },
+    convertToLog: function(input) {
+      const position = +input;
+      // position will be between 0 and 100
+      const minp = 0;
+      const maxp = 100;
+      // The result should be between 100 an 10000000
+      const minv = Math.log(100);
+      const maxv = Math.log(100000000000000);
       // calculate adjustment factor
       const scale = (maxv - minv) / (maxp - minp);
 
       const val = Math.exp(minv + scale * (position - minp));
-      return (+val.toPrecision(2)).toLocaleString();
+      const value = +val.toPrecision(2);
+      return value;
     }
   }
 };

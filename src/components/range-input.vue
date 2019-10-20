@@ -1,11 +1,10 @@
 <template>
   <div class="w-full">
-    <label class="block text-gray-100 text-sm font-bold mb-2" for="wealth_quantity">Wealth Quantity</label>
     <input
-      class="w-full py-2 px-3"
+      class="w-full py-3"
       id="wealth_quantity"
       type="range"
-      v-model="value"
+      v-bind:value="value"
       @input="$emit('change', $event.target.value)"
       min="0"
       max="100"
@@ -15,7 +14,7 @@
 
 <script>
 export default {
-  props: { value: Number },
+  props: ['value'],
   model: {
     prop: "value",
     event: "change"
