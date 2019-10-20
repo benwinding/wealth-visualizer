@@ -37,18 +37,21 @@
         </tr>
       </tbody>
     </table>
+    <wealth-3d />
   </div>
 </template>
 
 <script>
 import Range from "./components/range-input.vue";
 import Select from "./components/select-input.vue";
+import Wealth3d from "./components/wealth-3d.vue";
 
 export default {
   name: "app",
   components: {
     "range-input": Range,
     "select-input": Select,
+    "wealth-3d": Wealth3d
   },
   data() {
     return {
