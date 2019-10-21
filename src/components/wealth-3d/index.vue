@@ -7,17 +7,49 @@ import * as THREE from "three";
 import * as OrbitControls from "three-orbitcontrols";
 
 export default {
-  name: "ThreeTest",
+  props: ["value"],
+  watch: {
+    value: function(newValue, oldValue) {
+      this.setCones();
+    }
+  },
   data() {
     return {
       camera: null,
       controls: null,
       scene: null,
       renderer: null,
-      container: null
+      container: null,
+      addedCones: []
     };
   },
   methods: {
+    setCones: function() {
+      const count = Math.round(Math.pow(+this.value, 0.225));
+      // World
+      if (!this.scene) {
+        return;
+      }
+      console.log("watch.value", {count});
+      this.scene.remove(...this.addedCones);
+
+      var geometry = new THREE.CylinderBufferGeometry(0, 10, 30, 4, 1);
+      var material = new THREE.MeshPhongMaterial({
+        color: 0xffffff,
+        flatShading: true
+      });
+
+      for (var i = 0; i < count; i++) {
+        var mesh = new THREE.Mesh(geometry, material);
+        mesh.position.x = Math.random() * 1600 - 800;
+        mesh.position.y = 0;
+        mesh.position.z = Math.random() * 1600 - 800;
+        mesh.updateMatrix();
+        mesh.matrixAutoUpdate = false;
+        this.addedCones.push(mesh);
+        this.scene.add(mesh);
+      }
+    },
     init: function() {
       const container = document.getElementById("container-3d");
 
@@ -54,23 +86,7 @@ export default {
 
       controls.maxPolarAngle = Math.PI / 2;
 
-      // World
-
-      var geometry = new THREE.CylinderBufferGeometry(0, 10, 30, 4, 1);
-      var material = new THREE.MeshPhongMaterial({
-        color: 0xffffff,
-        flatShading: true
-      });
-
-      for (var i = 0; i < 500; i++) {
-        var mesh = new THREE.Mesh(geometry, material);
-        mesh.position.x = Math.random() * 1600 - 800;
-        mesh.position.y = 0;
-        mesh.position.z = Math.random() * 1600 - 800;
-        mesh.updateMatrix();
-        mesh.matrixAutoUpdate = false;
-        scene.add(mesh);
-      }
+      this.setCones();
 
       // lights
 
@@ -94,10 +110,14 @@ export default {
       this.container = container;
     },
     onWindowResize: function() {
-      this.camera.aspect = this.container.clientWidth / this.container.clientHeight;
+      this.camera.aspect =
+        this.container.clientWidth / this.container.clientHeight;
       this.camera.updateProjectionMatrix();
 
-      this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
+      this.renderer.setSize(
+        this.container.clientWidth,
+        this.container.clientHeight
+      );
     },
     animate: function() {
       requestAnimationFrame(this.animate);

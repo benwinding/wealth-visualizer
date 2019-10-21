@@ -38,15 +38,15 @@
       </tbody>
     </table>
     <div class="relative w-full">
-      <wealth-3d />
+      <wealth-3d :value="valueLog" />
     </div>
   </div>
 </template>
 
 <script>
-import Range from "./components/range-input.vue";
-import Select from "./components/select-input.vue";
-import Wealth3d from "./components/wealth-3d.vue";
+import Range from "./components/range-input";
+import Select from "./components/select-input";
+import Wealth3d from "./components/wealth-3d";
 
 export default {
   name: "app",
@@ -78,7 +78,7 @@ export default {
       this.textModel = this.valueLog;
     },
     calculateFromText: function() {
-      this.valueLog = this.textModel;
+      this.valueLog = +this.textModel;
       this.rangeModel = this.convertFromLog(this.textModel);
       console.log("calculateFromText", {
         valueLog: this.valueLog,
