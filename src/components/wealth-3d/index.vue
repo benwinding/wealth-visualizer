@@ -25,29 +25,34 @@ export default {
   },
   methods: {
     setCones: function() {
-      const count = Math.round(Math.pow(+this.value, 0.225));
       // World
       if (!this.scene) {
         return;
       }
-      console.log("watch.value", {count});
-      this.scene.remove(...this.addedCones);
+      const countCurrent = this.addedCones.length;
+      const countNew = Math.round(Math.pow(+this.value, 0.225));
 
-      var geometry = new THREE.CylinderBufferGeometry(0, 10, 30, 4, 1);
-      var material = new THREE.MeshPhongMaterial({
-        color: 0xffffff,
-        flatShading: true
-      });
+      const remove = this.addedCones.slice(countNew);
+      this.scene.remove(...remove);
+      this.addedCones = this.addedCones.slice(0, countNew);
 
-      for (var i = 0; i < count; i++) {
-        var mesh = new THREE.Mesh(geometry, material);
-        mesh.position.x = Math.random() * 1600 - 800;
-        mesh.position.y = 0;
-        mesh.position.z = Math.random() * 1600 - 800;
-        mesh.updateMatrix();
-        mesh.matrixAutoUpdate = false;
-        this.addedCones.push(mesh);
-        this.scene.add(mesh);
+      if (countCurrent < countNew) {
+        var geometry = new THREE.CylinderBufferGeometry(0, 10, 30, 4, 1);
+        var material = new THREE.MeshPhongMaterial({
+          color: 0xffffff,
+          flatShading: true
+        });
+        const countToAdd = countNew - countCurrent;
+        for (var i = 0; i < countToAdd; i++) {
+          var mesh = new THREE.Mesh(geometry, material);
+          mesh.position.x = Math.random() * 1600 - 800;
+          mesh.position.y = 0;
+          mesh.position.z = Math.random() * 1600 - 800;
+          mesh.updateMatrix();
+          mesh.matrixAutoUpdate = false;
+          this.addedCones.push(mesh);
+          this.scene.add(mesh);
+        }
       }
     },
     init: function() {
