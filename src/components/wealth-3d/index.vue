@@ -37,7 +37,7 @@ export default {
       this.addedCones = this.addedCones.slice(0, countNew);
 
       if (countCurrent < countNew) {
-        var geometry = new THREE.CylinderBufferGeometry(0, 10, 30, 4, 1);
+        var geometry = new THREE.BoxGeometry(30, 30, 30);
         var material = new THREE.MeshPhongMaterial({
           color: 0xffffff,
           flatShading: true

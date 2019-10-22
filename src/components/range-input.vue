@@ -8,6 +8,7 @@
       @input="$emit('change', $event.target.value)"
       min="0"
       max="100"
+      step="8.3333"
     />
   </div>
 </template>

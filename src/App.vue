@@ -107,14 +107,14 @@ export default {
       // position will be between 0 and 100
       const minp = 0;
       const maxp = 100;
-      // The result should be between 100 an 10000000
+      // The result should be between
       const minv = Math.log(100);
       const maxv = Math.log(100000000000000);
       // calculate adjustment factor
       const scale = (maxv - minv) / (maxp - minp);
 
       const val = Math.exp(minv + scale * (position - minp));
-      const value = +val.toPrecision(2);
+      const value = +val.toPrecision(1);
       return value;
     }
   }
