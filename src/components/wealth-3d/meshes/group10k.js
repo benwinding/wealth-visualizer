@@ -10,7 +10,7 @@ function make100note() {
   const mesh100note = new THREE.Mesh(geometry, material100);
   return mesh100note;
 }
-export function makeGroup10k() {
+function makeGroup10k() {
   // Add $10k notes
   const group = new THREE.Group();
   group.name = 'Group10k';
@@ -29,3 +29,4 @@ export function makeGroup10k() {
   console.log("makeGroup10k(): finished added meshes", { meshCount });
   return group;
 }
+export default makeGroup10k();

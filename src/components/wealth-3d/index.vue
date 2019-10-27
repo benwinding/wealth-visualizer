@@ -15,7 +15,7 @@ export default {
   props: ["value"],
   watch: {
     value: function(newValue, oldValue) {
-      this.setState(newValue);
+      meshes.setState(newValue);
     }
   },
   data() {
@@ -25,35 +25,9 @@ export default {
       scene: null,
       renderer: null,
       container: null,
-      groups: {
-        group10k: meshes.makeGroup10k(),
-        group1M: meshes.makeGroup1M(),
-        // group100M: meshes.makeGroup100M(),
-      }
     };
   },
   methods: {
-    setState: function(newState) {
-      function showChildrenUntil(g, showUntil) {
-        console.log("showChildrenUntil", { g, name: g.name, showUntil });
-        g.children.map((c, index) => (c.visible = index < showUntil));
-      }
-      const { group10k, group1M } = this.groups;
-
-      if (newState > money._1B){
-
-      } else if (newState > money._10k) {
-        showChildrenUntil(group10k, 0);
-        const currentMcount = group1M.children.length;
-        const newMcount = Math.round(newState / money._10k);
-        showChildrenUntil(group1M, newMcount);
-      } else if (newState >= money._100) {
-        showChildrenUntil(group1M, 0);
-        const currentMcount = group10k.children.length;
-        const newMcount = Math.round(newState / money._100);
-        showChildrenUntil(group10k, newMcount);
-      }
-    },
     init: function() {
       const container = document.getElementById("container-3d");
 
@@ -90,9 +64,7 @@ export default {
 
       controls.maxPolarAngle = Math.PI / 2;
 
-      scene.add(this.groups.group10k);
-      scene.add(this.groups.group1M);
-      // scene.add(this.groups.group100M);
+      scene.add(...meshes.allMeshes);
 
       // lights
 
@@ -115,7 +87,7 @@ export default {
       this.renderer = renderer;
       this.container = container;
 
-      this.setState(this.value);
+      meshes.setState(this.value);
     },
     onWindowResize: function() {
       this.camera.aspect =
