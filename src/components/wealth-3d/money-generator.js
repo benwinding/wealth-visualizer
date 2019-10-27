@@ -1,3 +1,5 @@
+import * as THREE from "three";
+
 const _100  = 100;
 const _1k   = 1000;
 const _10k  = 10000;
@@ -25,3 +27,10 @@ export async function getItemsToAdd(addItems, newCount) {
     _100
   }
 }
+
+/*
+
+100 - 10k : cash bundle
+10k - 1M : piles of bundles
+
+*/

@@ -1,16 +1,20 @@
 <template>
-  <div id="container-3d"></div>
+  <div>
+    <pre>{{value}}</pre>
+    <div id="container-3d"></div>
+  </div>
 </template>
 
 <script>
 import * as THREE from "three";
+import * as meshes from "./meshes";
 import * as OrbitControls from "three-orbitcontrols";
 
 export default {
   props: ["value"],
   watch: {
     value: function(newValue, oldValue) {
-      this.setCones();
+      this.setState(newValue);
     }
   },
   data() {
@@ -20,21 +24,22 @@ export default {
       scene: null,
       renderer: null,
       container: null,
-      addedCones: []
+      groups: {
+        _100note: new THREE.Group(),
+        _10kbundle: new THREE.Group(),
+        _100Mpallet: new THREE.Group(),
+      }
     };
   },
   methods: {
-    setCones: function() {
+    setState: function(newState) {
+      
+    },
+    initMeshes: function() {
       // World
       if (!this.scene) {
         return;
       }
-      const countCurrent = this.addedCones.length;
-      const countNew = Math.round(Math.pow(+this.value, 0.225));
-
-      const remove = this.addedCones.slice(countNew);
-      this.scene.remove(...remove);
-      this.addedCones = this.addedCones.slice(0, countNew);
 
       if (countCurrent < countNew) {
         var geometry = new THREE.BoxGeometry(30, 30, 30);
@@ -91,7 +96,9 @@ export default {
 
       controls.maxPolarAngle = Math.PI / 2;
 
-      this.setCones();
+      scene.add(this.groups._100note);
+      scene.add(this.groups._10kbundle);
+      scene.add(this.groups._100Mpallet);
 
       // lights
 
