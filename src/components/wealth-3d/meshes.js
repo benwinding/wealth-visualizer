@@ -1,7 +1,7 @@
 import * as THREE from "three";
 
 function make100note() {
-  const geometry = new THREE.BoxGeometry(100, 30, 0.5);
+  const geometry = new THREE.BoxGeometry(100, 0.5, 30);
   const material = new THREE.MeshPhongMaterial({
     color: 0xff0000,
     flatShading: true
@@ -30,6 +30,6 @@ function make100Mpallet() {
   return mesh100note;
 }
 
-export const _100note = make100note();
-export const _10kbundle = make10kbundle();
-export const _100Mpallet = make100Mpallet();
+export const _100noteMesh = make100note();
+export const _10kbundleMesh = make10kbundle();
+export const _100MpalletMesh = make100Mpallet();

@@ -8,6 +8,7 @@
 <script>
 import * as THREE from "three";
 import * as meshes from "./meshes";
+import * as money from "./money-generator";
 import * as OrbitControls from "three-orbitcontrols";
 
 export default {
@@ -25,40 +26,73 @@ export default {
       renderer: null,
       container: null,
       groups: {
-        _100note: new THREE.Group(),
-        _10kbundle: new THREE.Group(),
-        _100Mpallet: new THREE.Group(),
+        group100: new THREE.Group(),
+        group10k: new THREE.Group(),
+        group100M: new THREE.Group()
       }
     };
   },
   methods: {
     setState: function(newState) {
-      
+      function showChildrenUntil(g, showUntil) {
+        console.log("showChildrenUntil", { g, name: g.name, showUntil });
+        g.children.map((c, index) => (c.visible = index < showUntil));
+      }
+      const { group100, group10k, group100M } = this.groups;
+
+      if (newState > money._100M) {
+        showChildrenUntil(group100, 0);
+        showChildrenUntil(group10k, 0);
+        const currentMcount = group100M.children.length;
+        const newMcount = Math.round(newState / money._100M);
+        showChildrenUntil(group100M, newMcount);
+      } else if (newState > money._10k) {
+        showChildrenUntil(group100, 0);
+        showChildrenUntil(group100M, 0);
+        const currentMcount = group10k.children.length;
+        const newMcount = Math.round(newState / money._10k);
+        showChildrenUntil(group10k, newMcount);
+      } else if (newState > money._100) {
+        showChildrenUntil(group10k, 0);
+        showChildrenUntil(group100M, 0);
+        const currentMcount = group100.children.length;
+        const newMcount = Math.round(newState / money._100);
+        showChildrenUntil(group100, newMcount);
+      }
     },
     initMeshes: function() {
       // World
-      if (!this.scene) {
-        return;
-      }
+      const { group100, group10k, group100M } = this.groups;
+      group100.name = "group100";
+      group10k.name = "group10k";
+      group100M.name = "group100M";
 
-      if (countCurrent < countNew) {
-        var geometry = new THREE.BoxGeometry(30, 30, 30);
-        var material = new THREE.MeshPhongMaterial({
-          color: 0xffffff,
-          flatShading: true
-        });
-        const countToAdd = countNew - countCurrent;
-        for (var i = 0; i < countToAdd; i++) {
-          var mesh = new THREE.Mesh(geometry, material);
-          mesh.position.x = Math.random() * 1600 - 800;
-          mesh.position.y = 0;
-          mesh.position.z = Math.random() * 1600 - 800;
-          mesh.updateMatrix();
-          mesh.matrixAutoUpdate = false;
-          this.addedCones.push(mesh);
-          this.scene.add(mesh);
-        }
+      // Add $100 notes
+      let meshCount = 0;
+      for (let i = 0; i < money._10k; i += money._100) {
+        const mesh = meshes._100noteMesh.clone();
+        mesh.position.x = 0;
+        mesh.position.y = i / money._100;
+        mesh.position.z = 0;
+        mesh.updateMatrix();
+        mesh.matrixAutoUpdate = false;
+        mesh.visible = false;
+        group100.add(mesh);
+        meshCount++;
       }
+      // Add $10k bundle
+      for (let i = money._10k; i < money._1M; i += money._10k) {
+        const mesh = meshes._10kbundleMesh.clone();
+        mesh.position.x = 40;
+        mesh.position.y = 40;
+        mesh.position.z = i / money._100;
+        mesh.updateMatrix();
+        mesh.matrixAutoUpdate = false;
+        mesh.visible = false;
+        group10k.add(mesh);
+        meshCount++;
+      }
+      console.log("finished added meshes", { meshCount });
     },
     init: function() {
       const container = document.getElementById("container-3d");
@@ -96,9 +130,10 @@ export default {
 
       controls.maxPolarAngle = Math.PI / 2;
 
-      scene.add(this.groups._100note);
-      scene.add(this.groups._10kbundle);
-      scene.add(this.groups._100Mpallet);
+      scene.add(this.groups.group100);
+      scene.add(this.groups.group10k);
+      scene.add(this.groups.group100M);
+      this.initMeshes();
 
       // lights
 
