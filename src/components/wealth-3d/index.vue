@@ -26,9 +26,9 @@ export default {
       renderer: null,
       container: null,
       groups: {
-        group100: new THREE.Group(),
-        group10k: new THREE.Group(),
-        group100M: new THREE.Group()
+        group100: meshes.makeGroup100(),
+        group10k: meshes.makeGroup10k(),
+        group100M: meshes.makeGroup100M(),
       }
     };
   },
@@ -60,40 +60,6 @@ export default {
         showChildrenUntil(group100, newMcount);
       }
     },
-    initMeshes: function() {
-      // World
-      const { group100, group10k, group100M } = this.groups;
-      group100.name = "group100";
-      group10k.name = "group10k";
-      group100M.name = "group100M";
-
-      // Add $100 notes
-      let meshCount = 0;
-      for (let i = 0; i < money._10k; i += money._100) {
-        const mesh = meshes._100noteMesh.clone();
-        mesh.position.x = 0;
-        mesh.position.y = i / money._100;
-        mesh.position.z = 0;
-        mesh.updateMatrix();
-        mesh.matrixAutoUpdate = false;
-        mesh.visible = false;
-        group100.add(mesh);
-        meshCount++;
-      }
-      // Add $10k bundle
-      for (let i = money._10k; i < money._1M; i += money._10k) {
-        const mesh = meshes._10kbundleMesh.clone();
-        mesh.position.x = 40;
-        mesh.position.y = 40;
-        mesh.position.z = i / money._100;
-        mesh.updateMatrix();
-        mesh.matrixAutoUpdate = false;
-        mesh.visible = false;
-        group10k.add(mesh);
-        meshCount++;
-      }
-      console.log("finished added meshes", { meshCount });
-    },
     init: function() {
       const container = document.getElementById("container-3d");
 
@@ -112,7 +78,7 @@ export default {
         1,
         1000
       );
-      camera.position.set(400, 200, 0);
+      camera.position.set(400, 300, -300);
 
       // controls
 
@@ -133,7 +99,6 @@ export default {
       scene.add(this.groups.group100);
       scene.add(this.groups.group10k);
       scene.add(this.groups.group100M);
-      this.initMeshes();
 
       // lights
 
@@ -155,6 +120,8 @@ export default {
       this.scene = scene;
       this.renderer = renderer;
       this.container = container;
+
+      this.setState(this.value);
     },
     onWindowResize: function() {
       this.camera.aspect =
