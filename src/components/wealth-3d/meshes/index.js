@@ -14,14 +14,20 @@ export function setState(newState) {
     g.children.map((c, index) => (c.visible = index < showUntil));
   }
 
+  function hideAll() {
+    allMeshes.map(g => showChildrenUntil(g, 0));
+  }
+
+  hideAll();
   if (newState > money._1B){
+  } else if (newState > money._1M) {
+    // const showCount = Math.round(newState / money._1M);
+    // showChildrenUntil(Group100M, showCount);
   } else if (newState > money._10k) {
-    showChildrenUntil(Group10k, 0);
-    const newMcount = Math.round(newState / money._10k);
-    showChildrenUntil(Group1M, newMcount);
+    const showCount = Math.round(newState / money._10k);
+    showChildrenUntil(Group1M, showCount);
   } else if (newState >= money._100) {
-    showChildrenUntil(Group1M, 0);
-    const newMcount = Math.round(newState / money._100);
-    showChildrenUntil(Group10k, newMcount);
+    const showCount = Math.round(newState / money._100);
+    showChildrenUntil(Group10k, showCount);
   }
 }

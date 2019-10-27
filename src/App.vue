@@ -56,7 +56,7 @@ export default {
   },
   data() {
     return {
-      rangeModel: 50,
+      rangeModel: 30,
       textModel: 100,
       selectModel: 'AUD',
       valueLog: 0,

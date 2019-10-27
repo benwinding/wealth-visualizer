@@ -1,14 +1,26 @@
 import * as THREE from "three";
 import * as money from "./../money-generator";
 
-const material10k = new THREE.MeshPhongMaterial({
-  color: 0x00dd00,
-  flatShading: true
-});
+// var texture = new THREE.TextureLoader().load( '/textures/us_100.jpeg' );
+let loader = new THREE.TextureLoader();
+let material10k = [
+    new THREE.MeshBasicMaterial( { map: loader.load("/textures/us_100_side.jpeg") } ),
+    new THREE.MeshBasicMaterial( { map: loader.load("/textures/us_100_side.jpeg") } ),
+    new THREE.MeshBasicMaterial( { map: loader.load("/textures/us_100.jpeg") } ),
+    new THREE.MeshBasicMaterial( { map: loader.load("/textures/us_100_side.jpeg") } ),
+    new THREE.MeshBasicMaterial( { map: loader.load("/textures/us_100_side.jpeg") } ),
+    new THREE.MeshBasicMaterial( { map: loader.load("/textures/us_100_side.jpeg") } ),
+];
 function make10kbundle() {
-  const geometry = new THREE.BoxGeometry(100, 10, 30);
-  const mesh100note = new THREE.Mesh(geometry, material10k);
-  return mesh100note;
+  const geometry = new THREE.BoxGeometry(money.note100.length, 10, money.note100.width);
+  const mesh = new THREE.Mesh(geometry, material10k);
+  const maxRoatation = 0.05;
+  const randomRotation = Math.random() * maxRoatation - maxRoatation / 2;
+  const randomRotation2 = Math.random() * maxRoatation - maxRoatation / 2;
+  mesh.rotateY(randomRotation);
+  mesh.rotateY(Math.PI);
+  mesh.rotateX(randomRotation2);
+  return mesh;
 }
 function makeGroup1M() {
   // Add $10k bundle
@@ -19,9 +31,9 @@ function makeGroup1M() {
   for (let i = 0; i < money._1M; i += money._10k) {
     const mesh = make10kbundle();
     const index = i / money._10k;
-    const x = (Math.floor(index / countY) % countX) * -101;
-    const y = 5 + (Math.floor(index / (countX * countY)) % countY) * 11;
-    const z = (index % countZ) * 31;
+    const x = (Math.floor(index / countZ) % countX) * (-1 - money.note100.length);
+    const y = 5 + (Math.floor(index / (countX * countZ)) % countY) * 11;
+    const z = (index % countZ) * (1 + money.note100.width);
     mesh.position.x = x;
     mesh.position.y = y;
     mesh.position.z = z;
@@ -34,4 +46,5 @@ function makeGroup1M() {
   console.log("makeGroup1M(): finished added meshes", { meshCount });
   return group;
 }
-export default makeGroup1M();
+const group = makeGroup1M();
+export default group;

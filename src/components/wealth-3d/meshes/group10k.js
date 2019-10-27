@@ -1,14 +1,18 @@
 import * as THREE from "three";
 import * as money from "./../money-generator";
 
-const material100 = new THREE.MeshPhongMaterial({
-  color: 0x00ff00,
-  flatShading: true
+var loader = new THREE.TextureLoader();
+const material100 = new THREE.MeshBasicMaterial({
+  map: loader.load( '/textures/us_100.jpeg' )
 });
 function make100note() {
-  const geometry = new THREE.BoxGeometry(100, 0.09, 30);
-  const mesh100note = new THREE.Mesh(geometry, material100);
-  return mesh100note;
+  const geometry = new THREE.BoxGeometry(money.note100.length, 0.09, money.note100.width);
+  const mesh = new THREE.Mesh(geometry, material100);
+  const maxRoatation = 0.05;
+  const randomRotation = Math.random() * maxRoatation - maxRoatation / 2;
+  mesh.rotateY(randomRotation);
+  mesh.rotateY(Math.PI);
+  return mesh;
 }
 function makeGroup10k() {
   // Add $10k notes
@@ -29,4 +33,5 @@ function makeGroup10k() {
   console.log("makeGroup10k(): finished added meshes", { meshCount });
   return group;
 }
-export default makeGroup10k();
+const group = makeGroup10k();
+export default group;

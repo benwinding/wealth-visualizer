@@ -1,6 +1,5 @@
 <template>
   <div>
-    <pre>{{value}}</pre>
     <div id="container-3d"></div>
   </div>
 </template>
@@ -46,7 +45,9 @@ export default {
         1,
         1000
       );
-      camera.position.set(400, 500, -400);
+      // camera.position.set(100, 100, -100);
+      camera.position.set(200, 200, -200);
+      // camera.position.set(400, 500, -400);
       camera.lookAt(new THREE.Vector3(0,0,0));
 
       // controls

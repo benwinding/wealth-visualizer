@@ -12,6 +12,11 @@ export const _10B  = 10000000000;
 export const _100B = 100000000000;
 export const _1T   = 1000000000000;
 
+export const note100 = {
+  length: 120,
+  width: 50
+}
+
 /*
 
 100 - 10k : cash bundle
