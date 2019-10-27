@@ -17,9 +17,8 @@
             <div class="flex flex-row items-center" >
               <span>$</span>
               <input
-                type="text"
+                type="number"
                 v-model="textModel"
-                @change="calculateFromText"
                 class="w-full border border-blue-500 rounded"
               />
             </div>
@@ -63,6 +62,11 @@ export default {
       valueLog: 0,
       currencies: ['AUD', 'USD', 'NZD']
     };
+  },
+  watch: {
+    textModel(newValue) {
+      this.calculateFromText()
+    }
   },
   computed: {
     valueLogFormatted: function() {

@@ -7,7 +7,7 @@
 
 <script>
 import * as THREE from "three";
-import * as meshes from "./meshes";
+import * as meshes from "./meshes/index";
 import * as money from "./money-generator";
 import * as OrbitControls from "three-orbitcontrols";
 
@@ -26,9 +26,9 @@ export default {
       renderer: null,
       container: null,
       groups: {
-        group100: meshes.makeGroup100(),
         group10k: meshes.makeGroup10k(),
-        group100M: meshes.makeGroup100M(),
+        group1M: meshes.makeGroup1M(),
+        // group100M: meshes.makeGroup100M(),
       }
     };
   },
@@ -38,26 +38,20 @@ export default {
         console.log("showChildrenUntil", { g, name: g.name, showUntil });
         g.children.map((c, index) => (c.visible = index < showUntil));
       }
-      const { group100, group10k, group100M } = this.groups;
+      const { group10k, group1M } = this.groups;
 
-      if (newState > money._100M) {
-        showChildrenUntil(group100, 0);
-        showChildrenUntil(group10k, 0);
-        const currentMcount = group100M.children.length;
-        const newMcount = Math.round(newState / money._100M);
-        showChildrenUntil(group100M, newMcount);
+      if (newState > money._1B){
+
       } else if (newState > money._10k) {
-        showChildrenUntil(group100, 0);
-        showChildrenUntil(group100M, 0);
-        const currentMcount = group10k.children.length;
-        const newMcount = Math.round(newState / money._10k);
-        showChildrenUntil(group10k, newMcount);
-      } else if (newState > money._100) {
         showChildrenUntil(group10k, 0);
-        showChildrenUntil(group100M, 0);
-        const currentMcount = group100.children.length;
+        const currentMcount = group1M.children.length;
+        const newMcount = Math.round(newState / money._10k);
+        showChildrenUntil(group1M, newMcount);
+      } else if (newState >= money._100) {
+        showChildrenUntil(group1M, 0);
+        const currentMcount = group10k.children.length;
         const newMcount = Math.round(newState / money._100);
-        showChildrenUntil(group100, newMcount);
+        showChildrenUntil(group10k, newMcount);
       }
     },
     init: function() {
@@ -70,7 +64,7 @@ export default {
 
       const scene = new THREE.Scene();
       scene.background = new THREE.Color(0xcccccc);
-      scene.fog = new THREE.FogExp2(0xcccccc, 0.002);
+      scene.fog = new THREE.FogExp2(0xcccccc, 0.0005);
 
       const camera = new THREE.PerspectiveCamera(
         60,
@@ -78,27 +72,27 @@ export default {
         1,
         1000
       );
-      camera.position.set(400, 300, -300);
+      camera.position.set(400, 500, -400);
+      camera.lookAt(new THREE.Vector3(0,0,0));
 
       // controls
 
       const controls = new OrbitControls(camera, renderer.domElement);
 
-      //controls.addEventListener( 'change', render ); // call this only in static scenes (i.e., if there is no animation loop)
-
+      controls.enableKeys = false;
       controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
       controls.dampingFactor = 0.05;
 
       controls.screenSpacePanning = false;
 
-      controls.minDistance = 100;
-      controls.maxDistance = 500;
+      controls.minDistance = 10;
+      controls.maxDistance = 600;
 
       controls.maxPolarAngle = Math.PI / 2;
 
-      scene.add(this.groups.group100);
       scene.add(this.groups.group10k);
-      scene.add(this.groups.group100M);
+      scene.add(this.groups.group1M);
+      // scene.add(this.groups.group100M);
 
       // lights
 
