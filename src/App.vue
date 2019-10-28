@@ -15,7 +15,7 @@
           <td class="border px-4 py-2">Text Input</td>
           <td class="border px-4 py-2">
             <div class="flex flex-row items-center" >
-              <span>$</span>
+              <span class="mr-1">$</span>
               <input
                 type="number"
                 v-model="textModel"

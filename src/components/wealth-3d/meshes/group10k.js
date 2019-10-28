@@ -5,8 +5,10 @@ var loader = new THREE.TextureLoader();
 const material100 = new THREE.MeshBasicMaterial({
   map: loader.load( '/textures/us_100.jpeg' )
 });
+const [sizeX, sizeY, sizeZ] = [money.note100.length, 0.09, money.note100.width];
 function make100note() {
-  const geometry = new THREE.BoxGeometry(money.note100.length, 0.09, money.note100.width);
+  const geometry = new THREE.BoxGeometry(sizeX, sizeY, sizeZ);
+  geometry.translate(sizeX/2, 0, -sizeZ/2);
   const mesh = new THREE.Mesh(geometry, material100);
   const maxRoatation = 0.05;
   const randomRotation = Math.random() * maxRoatation - maxRoatation / 2;

@@ -9,6 +9,8 @@ import * as THREE from "three";
 import * as meshes from "./meshes/index";
 import * as money from "./money-generator";
 import * as OrbitControls from "three-orbitcontrols";
+import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
+import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
 
 export default {
   props: ["value"],
@@ -23,7 +25,7 @@ export default {
       controls: null,
       scene: null,
       renderer: null,
-      container: null,
+      container: null
     };
   },
   methods: {
@@ -36,19 +38,20 @@ export default {
       container.appendChild(renderer.domElement);
 
       const scene = new THREE.Scene();
-      scene.background = new THREE.Color(0xcccccc);
-      scene.fog = new THREE.FogExp2(0xcccccc, 0.0005);
+      scene.background = new THREE.Color(0xfff3b8);
+      scene.fog = new THREE.FogExp2(0xcccccc, 0.0003);
 
       const camera = new THREE.PerspectiveCamera(
         60,
         container.clientWidth / container.clientHeight,
         1,
-        1000
+        10000
       );
       // camera.position.set(100, 100, -100);
-      camera.position.set(200, 200, -200);
+      // camera.position.set(200, 200, -200);
       // camera.position.set(400, 500, -400);
-      camera.lookAt(new THREE.Vector3(0,0,0));
+      camera.position.set(800, 1000, -800);
+      camera.lookAt(new THREE.Vector3(0, 0, 0));
 
       // controls
 
@@ -61,7 +64,7 @@ export default {
       controls.screenSpacePanning = false;
 
       controls.minDistance = 10;
-      controls.maxDistance = 600;
+      controls.maxDistance = 10000;
 
       controls.maxPolarAngle = Math.PI / 2;
 
@@ -80,6 +83,11 @@ export default {
       var light = new THREE.AmbientLight(0x222222);
       scene.add(light);
 
+      var axesHelper = new THREE.AxesHelper(50);
+      scene.add(axesHelper);
+
+      this.addPerson(scene);
+
       window.addEventListener("resize", this.onWindowResize, false);
 
       this.camera = camera;
@@ -89,6 +97,31 @@ export default {
       this.container = container;
 
       meshes.setState(this.value);
+    },
+    addPerson: function(scene) {
+      var OBJFile = '/models/newman/man2.obj';
+      var MTLFile = '/models/newman/man2.obj.mtl';
+      var JPGFile = '/models/newman/man2_dff.jpg';
+
+      new MTLLoader().load(MTLFile, function(materials) {
+        materials.preload();
+        new OBJLoader()
+          .setMaterials(materials)
+          .load(OBJFile, function(object) {
+            object.scale.set(4, 4, 4);
+            object.rotateY(THREE.Math.degToRad(60));
+            object.translateX(100);
+            object.translateZ(-150);
+            var texture = new THREE.TextureLoader().load(JPGFile);
+            object.traverse(function(child) {
+              // aka setTexture
+              if (child instanceof THREE.Mesh) {
+                child.material.map = texture;
+              }
+            });
+            scene.add(object);
+          });
+      });
     },
     onWindowResize: function() {
       this.camera.aspect =

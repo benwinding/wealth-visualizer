@@ -2,10 +2,12 @@ import * as money from '../money-generator';
 
 import Group10k from './group10k';
 import Group1M from './group1M';
+import Group100M from './group100M';
 
 export const allMeshes = [
   Group10k,
-  Group1M
+  Group1M,
+  Group100M
 ]
 
 export function setState(newState) {
@@ -21,8 +23,8 @@ export function setState(newState) {
   hideAll();
   if (newState > money._1B){
   } else if (newState > money._1M) {
-    // const showCount = Math.round(newState / money._1M);
-    // showChildrenUntil(Group100M, showCount);
+    const showCount = Math.round(newState / money._1M);
+    showChildrenUntil(Group100M, showCount);
   } else if (newState > money._10k) {
     const showCount = Math.round(newState / money._10k);
     showChildrenUntil(Group1M, showCount);

@@ -1,40 +1,43 @@
 import * as THREE from "three";
 import * as money from "./../money-generator";
 
-// var texture = new THREE.TextureLoader().load( '/textures/us_100.jpeg' );
 let loader = new THREE.TextureLoader();
+const topMap = loader.load("/textures/us_100.jpeg");
+topMap.wrapS = THREE.RepeatWrapping;
+topMap.wrapT = THREE.RepeatWrapping;
+topMap.repeat.set(2, 5);
 let material10k = [
   new THREE.MeshBasicMaterial({ map: loader.load("/textures/us_100_side.jpeg") }),
   new THREE.MeshBasicMaterial({ map: loader.load("/textures/us_100_side.jpeg") }),
-  new THREE.MeshBasicMaterial({ map: loader.load("/textures/us_100.jpeg") }),
+  new THREE.MeshBasicMaterial({ map: topMap }),
   new THREE.MeshBasicMaterial({ map: loader.load("/textures/us_100_side.jpeg") }),
   new THREE.MeshBasicMaterial({ map: loader.load("/textures/us_100_side.jpeg") }),
   new THREE.MeshBasicMaterial({ map: loader.load("/textures/us_100_side.jpeg") }),
 ];
-const [sizeX, sizeY, sizeZ] = [money.note100.length, 10, money.note100.width];
-function make10kbundle() {
+const [sizeX, sizeY, sizeZ] = [money.note100.length * 2, 10 * 10, money.note100.width * 5];
+function make1Mbundle() {
   const geometry = new THREE.BoxGeometry(sizeX, sizeY, sizeZ);
-  geometry.translate(sizeX/2, 0, -sizeZ/2);
+  geometry.translate(sizeX / 2, sizeY / 2, -sizeZ / 2);
   const mesh = new THREE.Mesh(geometry, material10k);
-  const maxRoatation = 0.05;
-  const randomRotation = Math.random() * maxRoatation - maxRoatation / 2;
-  const randomRotation2 = Math.random() * maxRoatation - maxRoatation / 2;
-  mesh.rotateY(randomRotation);
+  // const maxRoatation = 0.05;
+  // const randomRotation = Math.random() * maxRoatation - maxRoatation / 2;
+  // const randomRotation2 = Math.random() * maxRoatation - maxRoatation / 2;
+  // mesh.rotateY(randomRotation);
+  // mesh.rotateX(randomRotation2);
   mesh.rotateY(Math.PI);
-  mesh.rotateX(randomRotation2);
   return mesh;
 }
 function makeGroup1M() {
   // Add $10k bundle
   const group = new THREE.Group();
   group.name = 'Group1M';
-  const [countX, countY, countZ] = [2, 10, 5];
+  const [countX, countY, countZ] = [5, 4, 5];
   let meshCount = 0;
-  for (let i = 0; i < money._1M; i += money._10k) {
-    const mesh = make10kbundle();
-    const index = i / money._10k;
+  for (let i = 0; i < money._100M; i += money._1M) {
+    const mesh = make1Mbundle();
+    const index = i / money._1M;
     const x = (Math.floor(index / countZ) % countX) * (-1 - sizeX);
-    const y = 5 + (Math.floor(index / (countX * countZ)) % countY) * (sizeY + 1);
+    const y = (Math.floor(index / (countX * countZ)) % countY) * (sizeY + 1);
     const z = (index % countZ) * (1 + sizeZ);
     mesh.position.x = x;
     mesh.position.y = y;
