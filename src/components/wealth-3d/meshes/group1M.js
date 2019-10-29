@@ -11,7 +11,11 @@ let material10k = [
   new THREE.MeshBasicMaterial({ map: loader.load("/textures/us_100_side.jpeg") }),
   new THREE.MeshBasicMaterial({ map: loader.load("/textures/us_100_side.jpeg") }),
 ];
-const [sizeX, sizeY, sizeZ] = [money.note100.length, 7, money.note100.width];
+const [sizeX, sizeY, sizeZ] = [
+  money.bundle10k.length,
+  money.bundle10k.height,
+  money.bundle10k.width
+];
 function make10kbundle() {
   const geometry = new THREE.BoxGeometry(sizeX, sizeY, sizeZ);
   geometry.translate(sizeX/2, 0, -sizeZ/2);

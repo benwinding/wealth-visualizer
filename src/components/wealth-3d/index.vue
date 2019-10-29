@@ -45,7 +45,7 @@ export default {
         60,
         container.clientWidth / container.clientHeight,
         1,
-        10000
+        1000000
       );
       // camera.position.set(100, 100, -100);
       // camera.position.set(200, 200, -200);
@@ -64,7 +64,7 @@ export default {
       controls.screenSpacePanning = false;
 
       controls.minDistance = 10;
-      controls.maxDistance = 10000;
+      controls.maxDistance = 1000000;
 
       controls.maxPolarAngle = Math.PI / 2;
 

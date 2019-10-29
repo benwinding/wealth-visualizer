@@ -14,7 +14,14 @@ export const _1T   = 1000000000000;
 
 export const note100 = {
   length: 120 * 0.9,
-  width: 50 * 0.9
+  width: 50 * 0.9,
+  height: 0.0007
+}
+
+export const bundle10k = {
+  length: note100.length,
+  width: note100.width,
+  height: note100.height * 10 * 1000,
 }
 
 /*
