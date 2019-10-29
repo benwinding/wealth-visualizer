@@ -14,7 +14,7 @@ let material10k = [
   new THREE.MeshBasicMaterial({ map: loader.load("/textures/us_100_side.jpeg") }),
   new THREE.MeshBasicMaterial({ map: loader.load("/textures/us_100_side.jpeg") }),
 ];
-const [sizeX, sizeY, sizeZ] = [money.note100.length * 2, 10 * 10, money.note100.width * 5];
+const [sizeX, sizeY, sizeZ] = [money.note100.length * 2, 7 * 10, money.note100.width * 5];
 function make1Mbundle() {
   const geometry = new THREE.BoxGeometry(sizeX, sizeY, sizeZ);
   geometry.translate(sizeX / 2, sizeY / 2, -sizeZ / 2);
@@ -27,11 +27,11 @@ function make1Mbundle() {
   mesh.rotateY(Math.PI);
   return mesh;
 }
+const [countX, countY, countZ] = [3, 10, 3];
 function makeGroup1M() {
   // Add $10k bundle
   const group = new THREE.Group();
   group.name = 'Group1M';
-  const [countX, countY, countZ] = [5, 4, 5];
   let meshCount = 0;
   for (let i = 0; i < money._100M; i += money._1M) {
     const mesh = make1Mbundle();

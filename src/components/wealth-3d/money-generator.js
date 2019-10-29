@@ -13,8 +13,8 @@ export const _100B = 100000000000;
 export const _1T   = 1000000000000;
 
 export const note100 = {
-  length: 120,
-  width: 50
+  length: 120 * 0.9,
+  width: 50 * 0.9
 }
 
 /*

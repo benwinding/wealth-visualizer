@@ -21,7 +21,7 @@ export function setState(newState) {
   }
 
   hideAll();
-  if (newState > money._1B){
+  if (newState > money._100M){
   } else if (newState > money._1M) {
     const showCount = Math.round(newState / money._1M);
     showChildrenUntil(Group100M, showCount);
