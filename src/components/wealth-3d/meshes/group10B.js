@@ -7,23 +7,17 @@ const topMap = loader.load(PathName + "textures/us_100.jpeg");
 topMap.wrapS = THREE.RepeatWrapping;
 topMap.wrapT = THREE.RepeatWrapping;
 topMap.repeat.set(2 * 3, 5 * 3);
+const sideMap = loader.load(PathName + "textures/us_100_side_2.jpeg");
+sideMap.wrapS = THREE.RepeatWrapping;
+sideMap.wrapT = THREE.RepeatWrapping;
+sideMap.repeat.set(10, 10 * 5);
 const material10k = [
-  new THREE.MeshBasicMaterial({
-    map: loader.load(PathName + "textures/us_100_side.jpeg")
-  }),
-  new THREE.MeshBasicMaterial({
-    map: loader.load(PathName + "textures/us_100_side.jpeg")
-  }),
+  new THREE.MeshBasicMaterial({ map: sideMap }),
+  new THREE.MeshBasicMaterial({ map: sideMap }),
   new THREE.MeshBasicMaterial({ map: topMap }),
-  new THREE.MeshBasicMaterial({
-    map: loader.load(PathName + "textures/us_100_side.jpeg")
-  }),
-  new THREE.MeshBasicMaterial({
-    map: loader.load(PathName + "textures/us_100_side.jpeg")
-  }),
-  new THREE.MeshBasicMaterial({
-    map: loader.load(PathName + "textures/us_100_side.jpeg")
-  })
+  new THREE.MeshBasicMaterial({ map: sideMap }),
+  new THREE.MeshBasicMaterial({ map: sideMap }),
+  new THREE.MeshBasicMaterial({ map: sideMap })
 ];
 const [sizeX, sizeY, sizeZ] = [
   money.bundle10k.length * 2 * 3,
