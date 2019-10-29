@@ -46,7 +46,7 @@ const [countX, countY, countZ] = [3, 10, 3];
 function makeGroup100M() {
   // Add $10k bundle
   const group = new THREE.Group();
-  group.name = "Group1M";
+  group.name = "Group100M";
   let meshCount = 0;
   for (let i = 0; i < money._100M; i += money._1M) {
     const mesh = make1Mbundle();

@@ -9,7 +9,7 @@ export const allMeshes = [
   Group10k,
   Group1M,
   Group100M,
-  Group10B
+  Group10B,
 ]
 
 export function setState(newState) {

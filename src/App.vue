@@ -42,6 +42,7 @@
     <div class="relative w-full">
       <wealth-3d :value="valueLog" />
     </div>
+    <app-footer />
   </div>
 </template>
 
@@ -49,13 +50,15 @@
 import Range from "./components/range-input";
 import Select from "./components/select-input";
 import Wealth3d from "./components/wealth-3d";
+import AppFooter from "./components/footer";
 
 export default {
   name: "app",
   components: {
     "range-input": Range,
     "select-input": Select,
-    "wealth-3d": Wealth3d
+    "wealth-3d": Wealth3d,
+    "app-footer": AppFooter
   },
   data() {
     return {
@@ -101,7 +104,7 @@ export default {
       const maxp = 100;
       // The result should be between 100 an 10000000
       const minv = Math.log(100);
-      const maxv = Math.log(100000000000000);
+      const maxv = Math.log(10000000000);
       // calculate adjustment factor
       const scale = (maxv - minv) / (maxp - minp);
       const val = (Math.log(position) - minv) / scale + minp;
@@ -116,7 +119,7 @@ export default {
       const maxp = 100;
       // The result should be between
       const minv = Math.log(100);
-      const maxv = Math.log(100000000000000);
+      const maxv = Math.log(10000000000);
       // calculate adjustment factor
       const scale = (maxv - minv) / (maxp - minp);
 

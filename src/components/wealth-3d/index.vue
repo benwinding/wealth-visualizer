@@ -8,7 +8,7 @@
 import * as THREE from "three";
 import * as meshes from "./meshes/index";
 import * as money from "./money-generator";
-import * as OrbitControls from "three-orbitcontrols";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
 import { PathName } from "./paths";
@@ -49,9 +49,9 @@ export default {
         1000000
       );
       // camera.position.set(100, 100, -100);
-      // camera.position.set(200, 200, -200);
-      // camera.position.set(400, 500, -400);
-      camera.position.set(800, 1000, -800);
+      // camera.position.set(300, 200, -300);
+      camera.position.set(300, 1200, -300);
+      // camera.position.set(800, 1000, -800);
       camera.lookAt(new THREE.Vector3(0, 0, 0));
 
       // controls
@@ -59,6 +59,7 @@ export default {
       const controls = new OrbitControls(camera, renderer.domElement);
 
       controls.enableKeys = false;
+      controls.autoRotate = true;
       controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
       controls.dampingFactor = 0.05;
 
@@ -100,28 +101,26 @@ export default {
       meshes.setState(this.value);
     },
     addPerson: function(scene) {
-      var OBJFile = PathName + 'models/newman/man2.obj';
-      var MTLFile = PathName + 'models/newman/man2.obj.mtl';
-      var JPGFile = PathName + 'models/newman/man2_dff.jpg';
+      var OBJFile = PathName + "models/newman/man2.obj";
+      var MTLFile = PathName + "models/newman/man2.obj.mtl";
+      var JPGFile = PathName + "models/newman/man2_dff.jpg";
 
       new MTLLoader().load(MTLFile, function(materials) {
         materials.preload();
-        new OBJLoader()
-          .setMaterials(materials)
-          .load(OBJFile, function(object) {
-            object.scale.set(4, 4, 4);
-            object.rotateY(THREE.Math.degToRad(60));
-            object.translateX(100);
-            object.translateZ(-150);
-            var texture = new THREE.TextureLoader().load(JPGFile);
-            object.traverse(function(child) {
-              // aka setTexture
-              if (child instanceof THREE.Mesh) {
-                child.material.map = texture;
-              }
-            });
-            scene.add(object);
+        new OBJLoader().setMaterials(materials).load(OBJFile, function(object) {
+          object.scale.set(4, 4, 4);
+          object.rotateY(THREE.Math.degToRad(60));
+          object.translateX(100);
+          object.translateZ(-150);
+          var texture = new THREE.TextureLoader().load(JPGFile);
+          object.traverse(function(child) {
+            // aka setTexture
+            if (child instanceof THREE.Mesh) {
+              child.material.map = texture;
+            }
           });
+          scene.add(object);
+        });
       });
     },
     onWindowResize: function() {
@@ -150,6 +149,6 @@ export default {
 <style scoped>
 #container-3d {
   width: 100%;
-  height: 400px;
+  height: 550px;
 }
 </style>
