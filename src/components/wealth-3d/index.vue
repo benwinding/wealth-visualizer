@@ -11,6 +11,7 @@ import * as money from "./money-generator";
 import * as OrbitControls from "three-orbitcontrols";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
+import { PathName } from "./paths";
 
 export default {
   props: ["value"],
@@ -83,8 +84,8 @@ export default {
       var light = new THREE.AmbientLight(0x222222);
       scene.add(light);
 
-      var axesHelper = new THREE.AxesHelper(50);
-      scene.add(axesHelper);
+      // var axesHelper = new THREE.AxesHelper(50);
+      // scene.add(axesHelper);
 
       this.addPerson(scene);
 
@@ -99,9 +100,9 @@ export default {
       meshes.setState(this.value);
     },
     addPerson: function(scene) {
-      var OBJFile = '/models/newman/man2.obj';
-      var MTLFile = '/models/newman/man2.obj.mtl';
-      var JPGFile = '/models/newman/man2_dff.jpg';
+      var OBJFile = PathName + 'models/newman/man2.obj';
+      var MTLFile = PathName + 'models/newman/man2.obj.mtl';
+      var JPGFile = PathName + 'models/newman/man2_dff.jpg';
 
       new MTLLoader().load(MTLFile, function(materials) {
         materials.preload();

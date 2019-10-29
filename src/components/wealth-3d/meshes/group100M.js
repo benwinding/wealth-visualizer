@@ -1,27 +1,28 @@
 import * as THREE from "three";
 import * as money from "./../money-generator";
+import { PathName } from "./../paths";
 
 let loader = new THREE.TextureLoader();
-const topMap = loader.load("/textures/us_100.jpeg");
+const topMap = loader.load(PathName + "textures/us_100.jpeg");
 topMap.wrapS = THREE.RepeatWrapping;
 topMap.wrapT = THREE.RepeatWrapping;
 topMap.repeat.set(2, 5);
 let material10k = [
   new THREE.MeshBasicMaterial({
-    map: loader.load("/textures/us_100_side.jpeg")
+    map: loader.load(PathName + "textures/us_100_side.jpeg")
   }),
   new THREE.MeshBasicMaterial({
-    map: loader.load("/textures/us_100_side.jpeg")
+    map: loader.load(PathName + "textures/us_100_side.jpeg")
   }),
   new THREE.MeshBasicMaterial({ map: topMap }),
   new THREE.MeshBasicMaterial({
-    map: loader.load("/textures/us_100_side.jpeg")
+    map: loader.load(PathName + "textures/us_100_side.jpeg")
   }),
   new THREE.MeshBasicMaterial({
-    map: loader.load("/textures/us_100_side.jpeg")
+    map: loader.load(PathName + "textures/us_100_side.jpeg")
   }),
   new THREE.MeshBasicMaterial({
-    map: loader.load("/textures/us_100_side.jpeg")
+    map: loader.load(PathName + "textures/us_100_side.jpeg")
   })
 ];
 const [sizeX, sizeY, sizeZ] = [

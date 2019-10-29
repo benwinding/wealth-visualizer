@@ -1,13 +1,13 @@
 import * as THREE from "three";
 import * as money from "../money-generator";
-import { PathName } from "./../paths";
+import { PathName } from "../paths";
 
 const loader = new THREE.TextureLoader();
 const topMap = loader.load(PathName + "textures/us_100.jpeg");
 topMap.wrapS = THREE.RepeatWrapping;
 topMap.wrapT = THREE.RepeatWrapping;
 topMap.repeat.set(2 * 3, 5 * 3);
-const material10k = [
+const material10B = [
   new THREE.MeshBasicMaterial({
     map: loader.load(PathName + "textures/us_100_side.jpeg")
   }),
@@ -34,7 +34,7 @@ const [sizeX, sizeY, sizeZ] = [
 function makeMoneyCube() {
   const geometry = new THREE.BoxGeometry(sizeX, sizeY, sizeZ);
   geometry.translate(sizeX / 2, sizeY / 2, -sizeZ / 2);
-  const mesh = new THREE.Mesh(geometry, material10k);
+  const mesh = new THREE.Mesh(geometry, material10B);
   mesh.rotateY(Math.PI);
   return mesh;
 }
@@ -71,21 +71,21 @@ function makePallet() {
   return group;
 }
 
-function make100Mbundle() {
+function make10Bbundle() {
   const group = new THREE.Group();
   group.add(makeMoneyCube());
   group.add(makePallet());
   return group;
 }
 const [countX, countY, countZ] = [10, 1, 10];
-function makeGroup10B() {
+function makeGroup1T() {
   // Add $10k bundle
   const group = new THREE.Group();
-  group.name = "Group100M";
+  group.name = "Group1T";
   let meshCount = 0;
-  for (let i = 0; i < money._10B; i += money._100M) {
-    const mesh = make100Mbundle();
-    const index = i / money._100M;
+  for (let i = 0; i < money._1T; i += money._10B) {
+    const mesh = make10Bbundle();
+    const index = i / money._10B;
     const x = (Math.floor(index / countZ) % countX) * (-offsetX - sizeX);
     const y =
       (Math.floor(index / (countX * countZ)) % countY) * sizeY + offsetY;
@@ -99,8 +99,8 @@ function makeGroup10B() {
     group.add(mesh);
     meshCount++;
   }
-  console.log("makeGroup10B(): finished added meshes", { meshCount, group });
+  console.log("makeGroup1T(): finished added meshes", { meshCount, group });
   return group;
 }
-const group = makeGroup10B();
+const group = makeGroup1T();
 export default group;

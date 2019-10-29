@@ -1,9 +1,10 @@
 import * as THREE from "three";
 import * as money from "./../money-generator";
+import { PathName } from "./../paths";
 
 var loader = new THREE.TextureLoader();
 const material100 = new THREE.MeshBasicMaterial({
-  map: loader.load("/textures/us_100.jpeg")
+  map: loader.load(PathName + "textures/us_100.jpeg")
 });
 const [sizeX, sizeY, sizeZ] = [
   money.note100.length,

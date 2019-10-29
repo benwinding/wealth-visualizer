@@ -1,7 +1,10 @@
 <template>
   <div class="container mx-auto p-4">
-    <p class="text-3xl">Wealth Visualisation</p>
-    <p class="italic mb-4">Input your wealth to visualize it's physicality...</p>
+    <p class="font-serif text-center font-thin text-3xl">Wealth Visualisation</p>
+    <div class="py-2">
+      <hr />
+    </div>
+    <p class="font-serif text-center italic mb-4">Input your wealth to visualize it's physicality...</p>
 
     <table class="table-fixed w-full">
       <tbody>

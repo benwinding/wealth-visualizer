@@ -1,15 +1,16 @@
 import * as THREE from "three";
 import * as money from "./../money-generator";
+import { PathName } from "./../paths";
 
 // var texture = new THREE.TextureLoader().load( '/textures/us_100.jpeg' );
 let loader = new THREE.TextureLoader();
 let material10k = [
-  new THREE.MeshBasicMaterial({ map: loader.load("/textures/us_100_side.jpeg") }),
-  new THREE.MeshBasicMaterial({ map: loader.load("/textures/us_100_side.jpeg") }),
-  new THREE.MeshBasicMaterial({ map: loader.load("/textures/us_100.jpeg") }),
-  new THREE.MeshBasicMaterial({ map: loader.load("/textures/us_100_side.jpeg") }),
-  new THREE.MeshBasicMaterial({ map: loader.load("/textures/us_100_side.jpeg") }),
-  new THREE.MeshBasicMaterial({ map: loader.load("/textures/us_100_side.jpeg") }),
+  new THREE.MeshBasicMaterial({ map: loader.load(PathName + "textures/us_100_side.jpeg") }),
+  new THREE.MeshBasicMaterial({ map: loader.load(PathName + "textures/us_100_side.jpeg") }),
+  new THREE.MeshBasicMaterial({ map: loader.load(PathName + "textures/us_100.jpeg") }),
+  new THREE.MeshBasicMaterial({ map: loader.load(PathName + "textures/us_100_side.jpeg") }),
+  new THREE.MeshBasicMaterial({ map: loader.load(PathName + "textures/us_100_side.jpeg") }),
+  new THREE.MeshBasicMaterial({ map: loader.load(PathName + "textures/us_100_side.jpeg") }),
 ];
 const [sizeX, sizeY, sizeZ] = [
   money.bundle10k.length,
