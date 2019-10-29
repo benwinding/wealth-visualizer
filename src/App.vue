@@ -27,12 +27,6 @@
             </div>
           </td>
         </tr>
-        <tr class="bg-gray-100">
-          <td class="border px-4 py-2">Currency</td>
-          <td class="border px-4 py-2">
-            <select-input v-model="selectModel" v-bind:options="currencies" @change="calculateFromCurrency"></select-input>
-          </td>
-        </tr>
         <tr>
           <td class="border px-4 py-2">Current Value</td>
           <td class="border px-4 py-2">${{ valueLogFormatted }}</td>
