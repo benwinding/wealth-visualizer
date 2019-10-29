@@ -57,7 +57,7 @@ function makePalletFlat() {
 }
 function makePallet() {
   const group = new THREE.Group();
-  group.add(makePalletFlat().translateY(offsetY - 20 / 2));
+  group.add(makePalletFlat().translateY(offsetY - 20));
   for (let ix = 0; ix <= sizeX; ix += (sizeX - 80) / 2) {
     for (let iz = 0; iz <= sizeZ; iz += (sizeZ - 80) / 2) {
       group.add(

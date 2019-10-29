@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto p-4">
-    <p class="font-serif text-center font-thin text-3xl">Wealth Visualisation</p>
+    <p class="font-serif text-center font-thin text-3xl">Wealth Visualizer</p>
     <div class="py-2">
       <hr />
     </div>
@@ -62,7 +62,7 @@ export default {
   },
   data() {
     return {
-      rangeModel: 30,
+      rangeModel: 50,
       textModel: 100,
       selectModel: 'AUD',
       valueLog: 0,

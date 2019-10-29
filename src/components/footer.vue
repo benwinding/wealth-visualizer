@@ -76,6 +76,7 @@
           40 52 L40 60 C40 61 40 62 42 62 45 62 64 53 64 32 64 14 50 0 32 0 Z"
           />
         </svg>
+        <img class="m-2" width="45" alt="MIT logo" src="https://i.imgur.com/z0VT0Qb.png" />
       </a>
     </div>
   </div>
