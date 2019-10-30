@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "start": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "deploy": "npm run build && gh-pages -d dist"
   },
   "dependencies": {
+    "color-interpolate": "^1.0.4",
     "core-js": "^3.1.2",
     "three": "^0.109.0",
     "vue": "^2.6.10"
@@ -14,10 +16,11 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.0.0",
     "@vue/cli-service": "^4.0.0",
+    "gh-pages": "2.1.1",
     "tailwindcss": "^1.1.2",
     "vue-template-compiler": "^2.6.10"
   },
-  "homepage": "https://github.com/benwinding/wealth-visualizer/",
+  "homepage": "https://github.com/benwinding/3d-wealth-visualizer/",
   "browserslist": [
     "> 1%",
     "last 2 versions"

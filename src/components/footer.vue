@@ -3,7 +3,7 @@
     <div class="flex flex-row items-center">
       <a
         class="flex flex-row items-center opacity-50 hover-opacity"
-        href="https://benwinding.com"
+        href="https://benwinding.com/projects"
         target="_blank"
       >
         <svg
