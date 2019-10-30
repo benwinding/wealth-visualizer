@@ -9,7 +9,7 @@
 
     <table class="table-fixed w-full">
       <tbody>
-        <tr>
+        <tr class="table-odd">
           <td class="border px-4 py-2 font-bold">Text Input</td>
           <td class="border px-4 py-2">
             <div class="flex flex-row items-center" >
@@ -22,13 +22,13 @@
             </div>
           </td>
         </tr>
-        <tr class="table-odd">
+        <tr class="table-even">
           <td class="border px-4 py-2 w-1/4 font-bold">Range Input</td>
           <td class="border px-4 pt-2">
             <range-input v-model="rangeModel" @change="calculateFromRange"></range-input>
           </td>
         </tr>
-        <tr>
+        <tr class="table-odd">
           <td class="border px-4 py-2 font-bold">Current Value</td>
           <td class="border px-4 py-2 font-bold font-serif italic text-xl">${{ valueLogFormatted }}</td>
         </tr>
@@ -44,7 +44,10 @@
 
 <style scoped>
 .table-odd {
-  background-color: rgba(0, 0, 0, 0.281);
+  background-color: rgba(100, 100, 100, 0.1);
+}
+.table-even {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 </style>
 
