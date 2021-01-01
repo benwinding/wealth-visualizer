@@ -5,7 +5,7 @@
     <div class="py-2">
       <hr />
     </div>
-    <p class="font-serif text-center italic mb-4">Input your wealth to visualize it's physicality...</p>
+    <p class="font-serif text-center italic mb-4">Input your wealth to visualize it physically.</p>
 
     <table class="table-fixed w-full">
       <tbody>
